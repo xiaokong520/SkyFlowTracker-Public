@@ -1,0 +1,55 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.FlyZonesMapper">
+
+    <select id="selectFlyZonesList" resultType="java.util.Map">
+        SELECT fz.id, fz.dji_fly_zone_id AS djiFlyZoneId, fz.name, fz.category, fz.shape,
+        fz.center_lat AS centerLat, fz.center_lng AS centerLng, fz.radius,
+        fz.max_altitude AS maxAltitude, fz.description, fz.source,
+        fz.creator_id AS creatorId, u.user_name AS creatorName,
+        fz.enabled, fz.create_time AS createTime, fz.modification_time AS modificationTime
+        FROM fly_zones fz
+        LEFT JOIN users u ON fz.creator_id = u.user_id
+        <where>
+            <if test="keyword != null and keyword != ''">AND fz.name LIKE CONCAT('%',#{keyword},'%')</if>
+            <if test="category != null">AND fz.category = #{category}</if>
+        </where>
+        ORDER BY fz.create_time DESC
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="countFlyZones" resultType="int">
+        SELECT COUNT(*) FROM fly_zones fz
+        <where>
+            <if test="keyword != null and keyword != ''">AND fz.name LIKE CONCAT('%',#{keyword},'%')</if>
+            <if test="category != null">AND fz.category = #{category}</if>
+        </where>
+    </select>
+
+    <update id="updateFlyZone">
+        UPDATE fly_zones
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="shape != null">shape = #{shape},</if>
+            <if test="centerLat != null">center_lat = #{centerLat},</if>
+            <if test="centerLng != null">center_lng = #{centerLng},</if>
+            <if test="radius != null">radius = #{radius},</if>
+            <if test="polygonPoints != null">polygon_points = #{polygonPoints},</if>
+            <if test="maxAltitude != null">max_altitude = #{maxAltitude},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            modification_time = #{modificationTime}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteFlyZones">
+        DELETE FROM fly_zones WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    app:cardCornerRadius="@dimen/radius_lg"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <!-- SN码 + 操作按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvSn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_base"
+                android:textStyle="bold"
+                android:fontFamily="monospace" />
+
+            <ImageView
+                android:id="@+id/btnEdit"
+                android:layout_width="@dimen/icon_size_lg"
+                android:layout_height="@dimen/icon_size_lg"
+                android:padding="@dimen/spacing_xs"
+                android:src="@android:drawable/ic_menu_edit"
+                android:tint="@color/primary"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="编辑设备" />
+
+            <ImageView
+                android:id="@+id/btnDelete"
+                android:layout_width="@dimen/icon_size_lg"
+                android:layout_height="@dimen/icon_size_lg"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:padding="@dimen/spacing_xs"
+                android:src="@android:drawable/ic_menu_delete"
+                android:tint="@color/error"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="删除设备" />
+        </LinearLayout>
+
+        <!-- 型号 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="型号："
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_sm" />
+
+            <TextView
+                android:id="@+id/tvModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_sm" />
+        </LinearLayout>
+
+        <!-- 飞控SN -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="飞控SN："
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_sm" />
+
+            <TextView
+                android:id="@+id/tvFcSn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_sm"
+                android:fontFamily="monospace" />
+        </LinearLayout>
+
+        <!-- 飞行数据行 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="航程/时间："
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_sm" />
+
+            <TextView
+                android:id="@+id/tvFlightData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 / 0"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_sm" />
+        </LinearLayout>
+
+        <!-- 创建时间 -->
+        <TextView
+            android:id="@+id/tvCreateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textColor="@color/text_tertiary"
+            android:textSize="@dimen/text_xs" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

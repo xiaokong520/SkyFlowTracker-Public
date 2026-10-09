@@ -1,0 +1,6 @@
+@echo off
+echo 安装依赖...
+pip install -r requirements.txt
+
+echo 启动 Flask 推理服务...
+python app.py

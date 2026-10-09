@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.FlightsMapper">
+    <update id="endFlights">
+        update flights
+        set end_time = #{endTime},
+            duration = #{duration},
+            max_altitude = #{maxAltitude},
+            max_speed = #{maxSpeed},
+            distance = #{distance},
+            status = #{status},
+            modification_time = #{modificationTime}
+        where id = #{id} and user_id = #{userId}
+    </update>
+
+    <select id="selectFlightsList" resultType="java.util.Map">
+        select f.id, f.user_id AS userId, u.user_name AS userName, f.sn,
+        f.home_latitude AS homeLatitude, f.home_longitude AS homeLongitude,
+        f.start_time AS startTime, f.end_time AS endTime,
+        f.duration, f.max_altitude AS maxAltitude, f.max_speed AS maxSpeed,
+        f.distance, f.status,
+        f.create_time AS createTime, f.modification_time AS modificationTime
+        from flights f left join users u on f.user_id = u.user_id
+        <where>
+            <if test="userId != null and userId != ''">and f.user_id = #{userId}</if>
+            <if test="keyword != null and keyword != ''">and (f.sn like concat('%',#{keyword},'%') or u.user_name like concat('%',#{keyword},'%'))</if>
+        </where>
+        order by f.start_time desc
+        limit #{offset}, #{size}
+    </select>
+
+    <select id="countFlights" resultType="int">
+        select count(*) from flights f left join users u on f.user_id = u.user_id
+        <where>
+            <if test="userId != null and userId != ''">and f.user_id = #{userId}</if>
+            <if test="keyword != null and keyword != ''">and (f.sn like concat('%',#{keyword},'%') or u.user_name like concat('%',#{keyword},'%'))</if>
+        </where>
+    </select>
+
+    <delete id="deleteFlights">
+        delete from flights where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

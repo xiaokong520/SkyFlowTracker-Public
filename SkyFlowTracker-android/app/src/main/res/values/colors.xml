@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ==================== 主色调 ==================== -->
+    <!-- 与 Web 前端 #2563EB (blue-600) 保持一致 -->
+    <color name="primary">#2563EB</color>
+    <color name="primary_dark">#1D4ED8</color>
+    <color name="primary_light">#3B82F6</color>
+    
+    <!-- 辅助色 -->
+    <color name="secondary">#4F46E5</color>
+    <color name="secondary_dark">#4338CA</color>
+    
+    <!-- ==================== 功能色 ==================== -->
+    <color name="success">#10B981</color>
+    <color name="success_light">#34D399</color>
+    
+    <color name="error">#EF4444</color>
+    <color name="error_light">#F87171</color>
+    
+    <color name="warning">#F59E0B</color>
+    <color name="warning_light">#FBBF24</color>
+    
+    <color name="info">#3B82F6</color>
+    <color name="info_light">#60A5FA</color>
+    
+    <!-- ==================== 中性色 ==================== -->
+    <!-- 文字颜色 -->
+    <color name="text_primary">#1F2937</color>      <!-- gray-800 -->
+    <color name="text_secondary">#6B7280</color>    <!-- gray-500 -->
+    <color name="text_tertiary">#9CA3AF</color>     <!-- gray-400 -->
+    <color name="text_disabled">#D1D5DB</color>     <!-- gray-300 -->
+    
+    <!-- 背景颜色 -->
+    <color name="background">#F9FAFB</color>        <!-- gray-50 -->
+    <color name="background_secondary">#F3F4F6</color> <!-- gray-100 -->
+    <color name="surface">#FFFFFF</color>
+    
+    <!-- 边框颜色 -->
+    <color name="border">#E5E7EB</color>            <!-- gray-200 -->
+    <color name="border_light">#F3F4F6</color>      <!-- gray-100 -->
+    <color name="divider">#E5E7EB</color>
+    
+    <!-- ==================== 渐变色（起始和结束） ==================== -->
+    <color name="gradient_blue_start">#3B82F6</color>   <!-- blue-500 -->
+    <color name="gradient_blue_middle">#2563EB</color>  <!-- blue-600 -->
+    <color name="gradient_blue_end">#4F46E5</color>     <!-- indigo-600 -->
+    
+    <color name="gradient_button_start">#2563EB</color> <!-- blue-600 -->
+    <color name="gradient_button_end">#4F46E5</color>   <!-- indigo-600 -->
+    
+    <!-- ==================== 透明度变体 ==================== -->
+    <color name="primary_alpha_10">#1A2563EB</color>
+    <color name="primary_alpha_20">#332563EB</color>
+    <color name="primary_alpha_50">#802563EB</color>
+    
+    <color name="black_alpha_10">#1A000000</color>
+    <color name="black_alpha_20">#33000000</color>
+    <color name="black_alpha_50">#80000000</color>
+    
+    <color name="white_alpha_10">#1AFFFFFF</color>
+    <color name="white_alpha_20">#33FFFFFF</color>
+    <color name="white_alpha_50">#80FFFFFF</color>
+    
+    <!-- ==================== 特殊用途 ==================== -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    
+    <!-- 阴影颜色 -->
+    <color name="shadow">#1A000000</color>
+    
+    <!-- 覆盖层 -->
+    <color name="overlay">#80000000</color>
+    
+    <!-- ==================== 状态颜色 ==================== -->
+    <color name="ripple_light">#1A2563EB</color>
+    <color name="ripple_dark">#332563EB</color>
+    
+    <!-- 用户状态颜色 -->
+    <color name="status_normal">@color/success</color>      <!-- 正常 - 绿色 -->
+    <color name="status_blocked">@color/error</color>       <!-- 封禁 - 红色 -->
+    <color name="status_pending">@color/warning</color>     <!-- 待审核 - 黄色 -->
+</resources>

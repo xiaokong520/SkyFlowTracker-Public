@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ==================== 间距规范（与 Web 端 Tailwind 对应） ==================== -->
+    <!-- p-1 = 4dp, p-2 = 8dp, p-4 = 16dp, p-8 = 32dp -->
+    <dimen name="spacing_xs">4dp</dimen>      <!-- p-1 -->
+    <dimen name="spacing_sm">8dp</dimen>      <!-- p-2 -->
+    <dimen name="spacing_md">16dp</dimen>     <!-- p-4 -->
+    <dimen name="spacing_lg">24dp</dimen>     <!-- p-6 -->
+    <dimen name="spacing_xl">32dp</dimen>     <!-- p-8 -->
+    <dimen name="spacing_2xl">48dp</dimen>    <!-- p-12 -->
+    
+    <!-- ==================== 圆角规范 ==================== -->
+    <dimen name="radius_sm">4dp</dimen>       <!-- rounded-sm -->
+    <dimen name="radius_md">8dp</dimen>       <!-- rounded-lg -->
+    <dimen name="radius_lg">12dp</dimen>      <!-- rounded-xl -->
+    <dimen name="radius_xl">16dp</dimen>      <!-- rounded-2xl -->
+    <dimen name="radius_2xl">24dp</dimen>     <!-- rounded-3xl -->
+    <dimen name="radius_full">999dp</dimen>   <!-- rounded-full -->
+    
+    <!-- ==================== 文字大小 ==================== -->
+    <dimen name="text_xs">12sp</dimen>        <!-- text-xs -->
+    <dimen name="text_sm">14sp</dimen>        <!-- text-sm -->
+    <dimen name="text_base">16sp</dimen>      <!-- text-base -->
+    <dimen name="text_lg">18sp</dimen>        <!-- text-lg -->
+    <dimen name="text_xl">20sp</dimen>        <!-- text-xl -->
+    <dimen name="text_2xl">24sp</dimen>       <!-- text-2xl -->
+    <dimen name="text_3xl">30sp</dimen>       <!-- text-3xl -->
+    
+    <!-- ==================== 按钮 ==================== -->
+    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_height_large">56dp</dimen>
+    <dimen name="button_padding_horizontal">24dp</dimen>
+    <dimen name="button_padding_vertical">12dp</dimen>
+    
+    <!-- ==================== 输入框 ==================== -->
+    <dimen name="input_height">48dp</dimen>
+    <dimen name="input_padding_horizontal">16dp</dimen>
+    <dimen name="input_padding_vertical">12dp</dimen>
+    
+    <!-- ==================== 卡片 ==================== -->
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+    
+    <!-- ==================== 图标 ==================== -->
+    <dimen name="icon_size_sm">16dp</dimen>
+    <dimen name="icon_size_md">24dp</dimen>
+    <dimen name="icon_size_lg">32dp</dimen>
+    <dimen name="icon_size_xl">48dp</dimen>
+</resources>

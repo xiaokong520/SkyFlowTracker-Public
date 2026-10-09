@@ -1,0 +1,108 @@
+# Kiro IDE配置
+.kiro/
+.kilocode/
+.claude/
+
+# DJI SDK文档和资源
+Mobile-SDK-Android-V5-5.17.0/
+Mobile-SDK-Android-V5-5.17.0.zip
+
+# IDE配置
+SkyFlowTracker-server/.idea/
+SkyFlowTracker-web/.vscode/
+SkyFlowTracker-android/.idea/
+
+# Android构建文件
+SkyFlowTracker-android/.gradle/
+SkyFlowTracker-android/.kotlin/
+SkyFlowTracker-android/build/
+SkyFlowTracker-android/*/build/
+SkyFlowTracker-android/local.properties
+
+# 文档和图片资源
+CLAUDE.md
+SkyFlowTrackerIcon.png
+SkyFlowTrackerNewIcon.png
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 临时文件
+*.tmp
+*.temp
+
+# 模型文件（超过100MB）
+SkyFlowTracker-server-flask/models/*.pt
+
+# 推理视频
+SkyFlowTracker-server-flask/output/videos/*.mp4
+SkyFlowTracker-server-flask/uploads/
+
+# MD文档
+INFERENCE_API.md
+
+#文档
+/docs
+
+/scrip
+# Private configuration (templates remain publishable)
+.env
+.env.*
+!.env.example
+!.env.*.example
+**/application-local.properties
+**/secrets.properties
+secrets/
+.private/
+
+# Private keys and signing stores
+*.pem
+*.key
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.p8
+*.mobileprovision
+*.ovpn
+
+# Local tooling, dependencies, build output and crash dumps
+.idea/
+.vscode/
+.gradle/
+.kotlin/
+.cxx/
+node_modules/
+target/
+build/
+dist/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.hprof
+*.dmp
+*.apk
+*.aab
+*.class
+
+# Runtime data, datasets and model weights
+SkyFlowTracker-server/data/
+SkyFlowTracker-server-flask/logs/
+SkyFlowTracker-server-flask/temp/
+SkyFlowTracker-server-flask/output/
+SkyFlowTracker-server-flask/uploads/
+SkyFlowTracker-server-flask/datasets/
+SkyFlowTracker-server-flask/models/*
+!SkyFlowTracker-server-flask/models/.gitkeep
+!SkyFlowTracker-server-flask/models/README.md
+*.sqlite
+*.sqlite3
+*.db
+
+# Local demo footage: do not publish identifiable / unlicensed media
+SkyFlowTracker-android/app/src/main/assets/demo_traffic.mp4

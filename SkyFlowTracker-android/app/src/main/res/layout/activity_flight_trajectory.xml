@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- 高德地图 -->
+    <com.amap.api.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 顶部返回按钮 -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/spacing_md"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/surface">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/spacing_sm"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="返回"
+            app:tint="@color/text_primary" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 右上角实时信息面板 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/spacing_md"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/radius_lg"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#E6FFFFFF">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_sm"
+            android:minWidth="140dp">
+
+            <!-- 高度 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="高度"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_xs" />
+                <TextView
+                    android:id="@+id/tvInfoAlt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_xs"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 速度 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="速度"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_xs" />
+                <TextView
+                    android:id="@+id/tvInfoSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_xs"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 航向 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="航向"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_xs" />
+                <TextView
+                    android:id="@+id/tvInfoHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_xs"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 底部播放控制栏 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/spacing_md"
+        app:cardCornerRadius="@dimen/radius_xl"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="@color/surface">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_md">
+
+            <!-- 进度条 -->
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="1000"
+                android:progress="0"
+                android:progressTint="@color/primary"
+                android:thumbTint="@color/primary"
+                android:progressBackgroundTint="@color/border" />
+
+            <!-- 控制按钮行 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:gravity="center_vertical">
+
+                <!-- 倍速选择 -->
+                <TextView
+                    android:id="@+id/tvSpeed"
+                    android:layout_width="48dp"
+                    android:layout_height="32dp"
+                    android:gravity="center"
+                    android:text="1x"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/text_sm"
+                    android:textStyle="bold"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="播放倍速" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- 跳到开头 -->
+                <ImageView
+                    android:id="@+id/btnSkipStart"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="@dimen/spacing_sm"
+                    android:src="@android:drawable/ic_media_previous"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="跳到开头"
+                    app:tint="@color/text_secondary" />
+
+                <!-- 播放/暂停 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:layout_marginEnd="@dimen/spacing_sm"
+                    app:cardCornerRadius="22dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/primary">
+
+                    <ImageView
+                        android:id="@+id/btnPlayPause"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@android:drawable/ic_media_play"
+                        android:contentDescription="播放"
+                        app:tint="@android:color/white" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 跳到结尾 -->
+                <ImageView
+                    android:id="@+id/btnSkipEnd"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="@dimen/spacing_sm"
+                    android:src="@android:drawable/ic_media_next"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="跳到结尾"
+                    app:tint="@color/text_secondary" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <!-- 时间显示 -->
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00 / 00:00"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_xs"
+                    android:fontFamily="monospace" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 无航线数据提示 -->
+    <LinearLayout
+        android:id="@+id/llNoPath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@android:drawable/ic_dialog_map"
+            android:contentDescription="无航线数据"
+            app:tint="@color/text_tertiary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="该飞行记录无航线数据"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_sm" />
+    </LinearLayout>
+</FrameLayout>

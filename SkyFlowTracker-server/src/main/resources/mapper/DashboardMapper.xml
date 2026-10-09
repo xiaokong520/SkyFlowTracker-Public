@@ -1,0 +1,142 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.DashboardMapper">
+
+    <!-- 总飞行次数 -->
+    <select id="countTotalFlights" resultType="int">
+        select count(*) from flights
+        <where>
+            <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+        </where>
+    </select>
+
+    <!-- 总检测车辆数 -->
+    <select id="sumTotalDetections" resultType="java.lang.Long">
+        select coalesce(sum(it.total_detections), 0)
+        from inference_tasks it
+        left join flights f on it.flight_id = f.id
+        <where>
+            it.status = 1
+            <if test="userId != null and userId != ''">and (f.user_id = #{userId} or it.flight_id is null)</if>
+        </where>
+    </select>
+
+    <!-- 总飞行时长(秒) -->
+    <select id="sumFlightDuration" resultType="java.lang.Long">
+        select coalesce(sum(duration), 0) from flights
+        <where>
+            <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+        </where>
+    </select>
+
+    <!-- 设备数量 -->
+    <select id="countTotalDevices" resultType="int">
+        select count(distinct d.sn) from devices d
+        <where>
+            <if test="userId != null and userId != ''">and d.user_id = #{userId}</if>
+        </where>
+    </select>
+
+    <!-- 检测车辆数趋势（支持 1h/1d/7d/30d） -->
+    <select id="selectDetectionTrend" resultType="java.util.Map">
+        select
+        <choose>
+            <when test="range == '1h'">DATE_FORMAT(it.start_time, '%H:%i') as date,</when>
+            <when test="range == '1d'">DATE_FORMAT(it.start_time, '%m-%d %H:00') as date,</when>
+            <otherwise>DATE_FORMAT(it.start_time, '%Y-%m-%d') as date,</otherwise>
+        </choose>
+               coalesce(sum(it.total_detections), 0) as detections
+        from inference_tasks it
+        left join flights f on it.flight_id = f.id
+        <where>
+            it.status = 1
+            <choose>
+                <when test="range == '1h'">and it.start_time >= date_sub(now(), interval 1 hour)</when>
+                <when test="range == '1d'">and it.start_time >= date_sub(now(), interval 1 day)</when>
+                <when test="range == '7d'">and it.start_time >= date_sub(curdate(), interval 7 day)</when>
+                <otherwise>and it.start_time >= date_sub(curdate(), interval 30 day)</otherwise>
+            </choose>
+            <if test="userId != null and userId != ''">and (f.user_id = #{userId} or it.flight_id is null)</if>
+        </where>
+        group by date
+        order by date asc
+    </select>
+
+    <!-- 飞行活动趋势（支持 1h/1d/7d/30d） -->
+    <select id="selectFlightActivity" resultType="java.util.Map">
+        select
+        <choose>
+            <when test="range == '1h'">DATE_FORMAT(start_time, '%H:%i') as date,</when>
+            <when test="range == '1d'">DATE_FORMAT(start_time, '%m-%d %H:00') as date,</when>
+            <otherwise>DATE_FORMAT(start_time, '%Y-%m-%d') as date,</otherwise>
+        </choose>
+               count(*) as count
+        from flights
+        <where>
+            <choose>
+                <when test="range == '1h'">start_time >= date_sub(now(), interval 1 hour)</when>
+                <when test="range == '1d'">start_time >= date_sub(now(), interval 1 day)</when>
+                <when test="range == '7d'">start_time >= date_sub(curdate(), interval 7 day)</when>
+                <otherwise>start_time >= date_sub(curdate(), interval 30 day)</otherwise>
+            </choose>
+            <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+        </where>
+        group by date
+        order by date asc
+    </select>
+
+    <!-- 飞行起点位置 -->
+    <select id="selectFlightLocations" resultType="java.util.Map">
+        select f.id, f.sn,
+               f.home_latitude as lat,
+               f.home_longitude as lng,
+               f.start_time as startTime
+        from flights f
+        <where>
+            f.home_latitude is not null and f.home_longitude is not null
+            <if test="userId != null and userId != ''">and f.user_id = #{userId}</if>
+        </where>
+        order by f.start_time desc
+        limit 100
+    </select>
+
+    <!-- 设备使用排行 Top10 -->
+    <select id="selectDeviceRanking" resultType="java.util.Map">
+        select f.sn,
+               d.model,
+               coalesce(sum(f.duration), 0) as flyTime
+        from flights f
+        left join devices d on f.sn = d.sn
+        <where>
+            <if test="userId != null and userId != ''">and f.user_id = #{userId}</if>
+        </where>
+        group by f.sn, d.model
+        order by flyTime desc
+        limit 10
+    </select>
+
+    <!-- 已完成推理任务的 result_data（用于Java端解析class_counts） -->
+    <select id="selectCompletedTasksResultData" resultType="com.example.skyflowtracker.pojo.InferenceTasks">
+        select it.id, it.result_data as resultData
+        from inference_tasks it
+        left join flights f on it.flight_id = f.id
+        <where>
+            it.status = 1 and it.result_data is not null and it.result_data != ''
+            <if test="userId != null and userId != ''">and (f.user_id = #{userId} or it.flight_id is null)</if>
+        </where>
+    </select>
+
+    <!-- 用户活跃排行 Top10（仅管理员） -->
+    <select id="selectUserActivityRanking" resultType="java.util.Map">
+        select u.user_name as userName,
+               u.nick_name as nickName,
+               count(f.id) as flightCount
+        from users u
+        left join flights f on u.user_id = f.user_id
+        group by u.user_id, u.user_name, u.nick_name
+        order by flightCount desc
+        limit 10
+    </select>
+
+</mapper>

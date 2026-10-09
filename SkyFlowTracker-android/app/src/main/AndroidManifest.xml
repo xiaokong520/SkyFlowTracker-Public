@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!--    MSDK所需权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!--允许访问网络，必选权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- 读取媒体文件权限（Android 13+） -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    
+    <!--允许获取粗略位置，若用GPS实现定位小蓝点功能则必选-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--允许获取网络状态，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--允许获取wifi网络信息，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许获取wifi状态改变，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--允许访问网络，必选权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--允许获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--允许获取wifi网络信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!--    MSDK usb相关权限-->
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.usb.accessory"
+        android:required="true"/>
+
+    <application
+        android:name=".MyApplication"
+        android:extractNativeLibs="true"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/sky_flow_tracker_new_icon"
+        android:label="@string/app_name_new"
+        android:roundIcon="@mipmap/sky_flow_tracker_new_icon_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MSDKSample"
+        android:networkSecurityConfig="@xml/network_security_config">
+        <meta-data
+            android:name="com.dji.sdk.API_KEY"
+            android:value="${MSDK_API_KEY}"/>
+        <meta-data
+            android:name="com.dji.mapkit.maplibre.apikey"
+            android:value="" />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="${AMAP_API_KEY}"/>
+        <!-- 启动页（权限 + SDK 初始化 + Token 验证） -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <!-- USB 配件连接通知 -->
+                <action android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
+                android:resource="@xml/accessory_filter" />
+        </activity>
+
+        <!-- 登录页面 -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- 注册页面 -->
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- 忘记密码页面 -->
+        <activity
+            android:name=".ui.ForgotPasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- 飞行轨迹回放 -->
+        <activity
+            android:name=".ui.FlightTrajectoryActivity"
+            android:exported="false" />
+
+        <!-- 主页（底部导航） -->
+        <activity
+            android:name=".ui.HomeActivity"
+            android:exported="false" />
+
+        <!-- 无人机控制界面 -->
+        <activity android:name="dji.v5.ux.sample.showcase.defaultlayout.DefaultLayoutActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="false"/>
+        <activity android:name=".ui.CustomDefaultLayoutActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="false">
+
+        </activity>
+        <service android:name="com.amap.api.location.APSService"/>
+    </application>
+
+</manifest>

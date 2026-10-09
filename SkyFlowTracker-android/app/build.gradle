@@ -1,0 +1,164 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+// Never store personal credentials in the shared gradle.properties.
+def localSettings = new Properties()
+def localSettingsFile = rootProject.file('secrets.properties')
+if (localSettingsFile.exists()) {
+    localSettingsFile.withInputStream { localSettings.load(it) }
+}
+def setting = { String name, String fallback ->
+    System.getenv(name) ?: providers.gradleProperty(name).orNull ?: localSettings.getProperty(name) ?: fallback
+}
+def javaString = { String value -> groovy.json.JsonOutput.toJson(value) }
+
+android {
+    namespace 'com.example.skyflowtracker'
+    compileSdk 35
+    ndkVersion project.NDK_VERSION
+
+    defaultConfig {
+        applicationId "com.example.skyflowtracker"
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // 启用 MultiDex（DJI SDK 需要）
+        multiDexEnabled true
+        
+        // Add manifest placeholders for API Keys
+        manifestPlaceholders = [
+            MSDK_API_KEY: setting("MSDK_API_KEY", ""),
+            AMAP_API_KEY: setting("AMAP_API_KEY", "")
+        ]
+
+        buildConfigField "String", "API_BASE_URL", javaString(setting("API_BASE_URL", "http://10.0.2.2:8080/api/v1/"))
+        buildConfigField "String", "WEB_BASE_URL", javaString(setting("WEB_BASE_URL", "http://10.0.2.2:5173"))
+
+        ndk {
+            abiFilters 'arm64-v8a' // 当前 MSDK 只支持 arm64-v8a 架构
+        }
+
+        // MSDK 相关的 so 库，加上一下配置
+        packagingOptions {
+            pickFirst 'lib/arm64-v8a/libc++_shared.so'
+            pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+        }
+
+        // MSDK 相关的 so 库，加上一下配置
+        packagingOptions {
+            doNotStrip "*/*/libconstants.so"
+            doNotStrip "*/*/libdji_innertools.so"
+            doNotStrip "*/*/libdjibase.so"
+            doNotStrip "*/*/libDJICSDKCommon.so"
+            doNotStrip "*/*/libDJIFlySafeCore-CSDK.so"
+            doNotStrip "*/*/libdjifs_jni-CSDK.so"
+            doNotStrip "*/*/libDJIRegister.so"
+            doNotStrip "*/*/libdjisdk_jni.so"
+            doNotStrip "*/*/libDJIUpgradeCore.so"
+            doNotStrip "*/*/libDJIUpgradeJNI.so"
+            doNotStrip "*/*/libDJIWaypointV2Core-CSDK.so"
+            doNotStrip "*/*/libdjiwpv2-CSDK.so"
+            doNotStrip "*/*/libFlightRecordEngine.so"
+            doNotStrip "*/*/libvideo-framing.so"
+            doNotStrip "*/*/libwaes.so"
+            doNotStrip "*/*/libagora-rtsa-sdk.so"
+            doNotStrip "*/*/libc++.so"
+            doNotStrip "*/*/libc++_shared.so"
+            doNotStrip "*/*/libmrtc_28181.so"
+            doNotStrip "*/*/libmrtc_agora.so"
+            doNotStrip "*/*/libmrtc_core.so"
+            doNotStrip "*/*/libmrtc_core_jni.so"
+            doNotStrip "*/*/libmrtc_data.so"
+            doNotStrip "*/*/libmrtc_log.so"
+            doNotStrip "*/*/libmrtc_onvif.so"
+            doNotStrip "*/*/libmrtc_rtmp.so"
+            doNotStrip "*/*/libmrtc_rtsp.so"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.?ar'], dir: 'libs')
+
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.viewfinder.core
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+
+    implementation project(":android-sdk-v5-uxsdk")
+
+    // DJI SDK V5 核心依赖（按照官方文档配置）
+    implementation deps.aircraft
+    compileOnly deps.aircraftProvided
+    
+    // 网络库（必需）- 使用 runtimeOnly
+    runtimeOnly deps.networkImp
+    
+    // 其他必需的依赖
+    implementation deps.multidex
+    implementation deps.kotlinLib
+
+    //高德地图
+    implementation deps.amap3D
+    
+    // 网络请求
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+    
+    // 图片加载
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    kapt 'com.github.bumptech.glide:compiler:4.16.0'
+    
+    // 协程
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    
+    // ViewModel 和 LiveData
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    
+    // 图片选择器
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+    
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
+    
+    // SwipeRefreshLayout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Markdown 渲染
+    implementation 'io.noties.markwon:core:4.6.2'
+    implementation 'io.noties.markwon:ext-tables:4.6.2'
+    implementation 'io.noties.markwon:ext-strikethrough:4.6.2'
+}

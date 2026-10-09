@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_home"
+    app:startDestination="@id/nav_profile">
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.skyflowtracker.ui.fragment.ProfileFragment"
+        android:label="个人中心" />
+
+    <fragment
+        android:id="@+id/nav_devices"
+        android:name="com.example.skyflowtracker.ui.fragment.DeviceManagementFragment"
+        android:label="设备管理" />
+
+    <fragment
+        android:id="@+id/nav_flights"
+        android:name="com.example.skyflowtracker.ui.fragment.FlightManagementFragment"
+        android:label="飞行记录" />
+
+    <fragment
+        android:id="@+id/nav_inference"
+        android:name="com.example.skyflowtracker.ui.fragment.InferenceManagementFragment"
+        android:label="推理任务" />
+
+    <fragment
+        android:id="@+id/nav_missions"
+        android:name="com.example.skyflowtracker.ui.fragment.MissionFragment"
+        android:label="航线任务" />
+
+    <fragment
+        android:id="@+id/nav_ai_chat"
+        android:name="com.example.skyflowtracker.ui.fragment.AiChatFragment"
+        android:label="AI助手" />
+</navigation>

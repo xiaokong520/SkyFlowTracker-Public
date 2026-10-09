@@ -1,0 +1,53 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.WaypointMissionsMapper">
+
+    <select id="selectMissionsList" resultType="java.util.Map">
+        SELECT m.id, m.name, m.description, m.status,
+        m.creator_id AS creatorId, cu.user_name AS creatorName,
+        m.assignee_id AS assigneeId, au.user_name AS assigneeName,
+        m.total_distance AS totalDistance, m.estimated_time AS estimatedTime,
+        m.create_time AS createTime, m.modification_time AS modificationTime
+        FROM waypoint_missions m
+        LEFT JOIN users cu ON m.creator_id = cu.user_id
+        LEFT JOIN users au ON m.assignee_id = au.user_id
+        <where>
+            <if test="creatorId != null and creatorId != ''">AND m.creator_id = #{creatorId}</if>
+            <if test="assigneeId != null and assigneeId != ''">AND m.assignee_id = #{assigneeId}</if>
+            <if test="keyword != null and keyword != ''">AND m.name LIKE CONCAT('%',#{keyword},'%')</if>
+        </where>
+        ORDER BY m.create_time DESC
+        LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="countMissions" resultType="int">
+        SELECT COUNT(*) FROM waypoint_missions m
+        <where>
+            <if test="creatorId != null and creatorId != ''">AND m.creator_id = #{creatorId}</if>
+            <if test="assigneeId != null and assigneeId != ''">AND m.assignee_id = #{assigneeId}</if>
+            <if test="keyword != null and keyword != ''">AND m.name LIKE CONCAT('%',#{keyword},'%')</if>
+        </where>
+    </select>
+
+    <update id="updateMission">
+        UPDATE waypoint_missions
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="waypoints != null">waypoints = #{waypoints},</if>
+            <if test="totalDistance != null">total_distance = #{totalDistance},</if>
+            <if test="estimatedTime != null">estimated_time = #{estimatedTime},</if>
+            modification_time = #{modificationTime}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteMissions">
+        DELETE FROM waypoint_missions WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.UsersMapper">
+    <select id="login" parameterType="com.example.skyflowtracker.dto.LoginDto" resultType="com.example.skyflowtracker.pojo.Users">
+        SELECT * from users
+        <where>
+            <if test="userName != null and userName != ''">user_name = #{userName}</if>
+            <if test="email != null and email != ''">email = #{email}</if>
+        </where>
+    </select>
+
+    <update id="updateUserInfo" parameterType="com.example.skyflowtracker.dto.UpdateUserInfoDto" >
+        UPDATE users
+        <set>
+            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="role != null">role = #{role},</if>
+            modification_time = #{modificationTime}
+        </set> where user_id = #{userId}
+    </update>
+    
+    <delete id="deleteUsers">
+        delete from users where user_id in
+        <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+</mapper>

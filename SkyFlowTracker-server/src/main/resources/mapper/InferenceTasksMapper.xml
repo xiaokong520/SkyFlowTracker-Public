@@ -1,0 +1,73 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.InferenceTasksMapper">
+    <update id="updateTask">
+        UPDATE inference_tasks
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="videoPath != null">
+                video_path = #{videoPath},
+            </if>
+            <if test="totalDetections != null">
+                total_detections = #{totalDetections},
+            </if>
+            <if test="resultData != null">
+                result_data = #{resultData},
+            </if>
+            <if test="modificationTime != null">
+                modification_time = #{modificationTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectTasksList" resultType="map">
+        SELECT
+        it.id,
+        it.flight_id AS flightId,
+        it.model_name AS modelName,
+        it.status,
+        it.total_detections AS totalDetections,
+        it.start_time AS startTime,
+        it.end_time AS endTime
+        FROM inference_tasks it
+        LEFT JOIN flights f ON it.flight_id = f.id
+        <where>
+            <if test="userId != null and userId != ''">
+                AND (f.user_id = #{userId} OR it.user_id = #{userId})
+            </if>
+        </where>
+        <if test="flightId != null">
+            AND it.flight_id = #{flightId}
+        </if>
+        ORDER BY it.start_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="countTasks" resultType="int">
+        SELECT COUNT(*)
+        FROM inference_tasks it
+        LEFT JOIN flights f ON it.flight_id = f.id
+        <where>
+            <if test="userId != null and userId != ''">
+                AND (f.user_id = #{userId} OR it.user_id = #{userId})
+            </if>
+        </where>
+        <if test="flightId != null">
+            AND it.flight_id = #{flightId}
+        </if>
+    </select>
+
+    <delete id="deleteTasks">
+        DELETE FROM inference_tasks WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.VideoSharesMapper">
+
+    <select id="selectShareListByUserId" resultType="map">
+        SELECT
+            vs.id,
+            vs.share_code AS shareCode,
+            vs.task_id AS taskId,
+            vs.expire_time AS expireTime,
+            vs.view_count AS viewCount,
+            vs.create_time AS createTime,
+            it.model_name AS modelName,
+            it.total_detections AS totalDetections,
+            CASE WHEN vs.expire_time &gt; NOW() THEN 1 ELSE 0 END AS isActive
+        FROM video_shares vs
+        INNER JOIN inference_tasks it ON vs.task_id = it.id
+        WHERE vs.user_id = #{userId}
+        ORDER BY vs.create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="countSharesByUserId" resultType="int">
+        SELECT COUNT(*)
+        FROM video_shares
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectAllShareList" resultType="map">
+        SELECT
+            vs.id,
+            vs.share_code AS shareCode,
+            vs.task_id AS taskId,
+            vs.user_id AS userId,
+            vs.expire_time AS expireTime,
+            vs.view_count AS viewCount,
+            vs.create_time AS createTime,
+            it.model_name AS modelName,
+            it.total_detections AS totalDetections,
+            u.user_name AS username,
+            CASE WHEN vs.expire_time &gt; NOW() THEN 1 ELSE 0 END AS isActive
+        FROM video_shares vs
+        INNER JOIN inference_tasks it ON vs.task_id = it.id
+        LEFT JOIN users u ON vs.user_id = u.user_id
+        ORDER BY vs.create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="countAllShares" resultType="int">
+        SELECT COUNT(*) FROM video_shares
+    </select>
+
+</mapper>

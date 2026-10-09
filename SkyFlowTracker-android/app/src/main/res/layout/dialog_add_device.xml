@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_md">
+
+    <!-- 添加方式切换 -->
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@id/btnModeSn">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnModeSn"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="输入SN码"
+            android:textSize="@dimen/text_sm" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnModeQr"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="上传二维码"
+            android:textSize="@dimen/text_sm" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <!-- SN码输入区域 -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilSnCode"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:hint="SN码（多个用逗号或换行分隔）"
+        app:boxStrokeColor="@color/primary"
+        app:boxCornerRadiusTopStart="@dimen/radius_md"
+        app:boxCornerRadiusTopEnd="@dimen/radius_md"
+        app:boxCornerRadiusBottomStart="@dimen/radius_md"
+        app:boxCornerRadiusBottomEnd="@dimen/radius_md">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSnCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:textSize="@dimen/text_base" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 二维码上传区域 -->
+    <LinearLayout
+        android:id="@+id/llQrCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvFileName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未选择文件"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_sm" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSelectFile"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="选择二维码图片"
+            android:textSize="@dimen/text_sm"
+            app:strokeColor="@color/primary"
+            app:cornerRadius="@dimen/radius_md" />
+    </LinearLayout>
+
+</LinearLayout>

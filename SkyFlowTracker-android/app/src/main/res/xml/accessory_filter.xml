@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- DJI SDK USB Accessory Filter -->
+    <usb-accessory
+        manufacturer="DJI"
+        model=".*" />
+</resources>

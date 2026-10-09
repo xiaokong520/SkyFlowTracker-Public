@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">SkyFlowTracker</string>
+    <string name="app_name_new" translatable="false">SkyFlowTracker</string>
+    
+    <!-- 登录页面 -->
+    <string name="login_title" translatable="false">登录账号</string>
+    <string name="login_username" translatable="false">用户名登录</string>
+    <string name="login_email" translatable="false">邮箱登录</string>
+    <string name="hint_username" translatable="false">请输入用户名</string>
+    <string name="hint_email" translatable="false">请输入邮箱地址</string>
+    <string name="hint_password" translatable="false">请输入密码</string>
+    <string name="hint_captcha" translatable="false">请输入验证码</string>
+    <string name="remember_me" translatable="false">记住我</string>
+    <string name="forgot_password" translatable="false">忘记密码?</string>
+    <string name="btn_login" translatable="false">登录</string>
+    <string name="no_account" translatable="false">还没有账号？</string>
+    <string name="go_register" translatable="false">立即注册</string>
+    
+    <!-- 注册页面 -->
+    <string name="register_title" translatable="false">创建账号</string>
+    <string name="hint_nickname" translatable="false">请输入昵称</string>
+    <string name="hint_confirm_password" translatable="false">请输入确认密码</string>
+    <string name="hint_email_code" translatable="false">请输入邮箱验证码</string>
+    <string name="btn_send_code" translatable="false">发送</string>
+    <string name="btn_register" translatable="false">注册</string>
+    <string name="has_account" translatable="false">已有账号？</string>
+    <string name="go_login" translatable="false">立即登录</string>
+    
+    <!-- 忘记密码页面 -->
+    <string name="forgot_password_title" translatable="false">重置密码</string>
+    <string name="hint_new_password" translatable="false">请输入新密码</string>
+    <string name="btn_reset_password" translatable="false">重置密码</string>
+    <string name="remember_password" translatable="false">想起密码了？</string>
+    <string name="send_code" translatable="false">发送验证码</string>
+    
+    <!-- 个人中心 -->
+    <string name="profile_title" translatable="false">个人中心</string>
+    <string name="edit_nickname" translatable="false">修改昵称</string>
+    <string name="change_password" translatable="false">修改密码</string>
+    <string name="enter_flight" translatable="false">进入飞行界面</string>
+    <string name="logout" translatable="false">退出登录</string>
+    
+    <!-- 设备管理 -->
+    <string name="device_management" translatable="false">设备管理</string>
+    <string name="nav_profile" translatable="false">个人中心</string>
+    <string name="nav_devices" translatable="false">设备管理</string>
+    <string name="nav_flights" translatable="false">飞行记录</string>
+    
+    <!-- 用户信息字段 -->
+    <string name="field_email" translatable="false">邮箱</string>
+    <string name="field_role" translatable="false">角色</string>
+    <string name="field_status" translatable="false">状态</string>
+    <string name="field_register_time" translatable="false">注册时间</string>
+    <string name="field_last_login" translatable="false">最后登录</string>
+    <string name="field_ip" translatable="false">IP地址</string>
+    
+    <!-- 角色 -->
+    <string name="role_admin" translatable="false">管理员</string>
+    <string name="role_user" translatable="false">普通用户</string>
+    
+    <!-- 状态 -->
+    <string name="status_normal" translatable="false">正常</string>
+    <string name="status_blocked" translatable="false">封禁</string>
+    <string name="status_pending" translatable="false">待审核</string>
+    
+    <!-- 提示信息 -->
+    <string name="loading" translatable="false">加载中...</string>
+    <string name="login_success" translatable="false">登录成功，欢迎回来！</string>
+    <string name="register_success" translatable="false">注册成功，请等待管理员审核后登录</string>
+    <string name="logout_confirm" translatable="false">确定要退出登录吗？</string>
+    <string name="change_avatar" translatable="false">修改头像</string>
+    <string name="take_photo" translatable="false">拍照</string>
+    <string name="choose_from_gallery" translatable="false">从相册选择</string>
+    
+    <!-- 错误提示 -->
+    <string name="error_username_empty" translatable="false">请输入用户名</string>
+    <string name="error_email_empty" translatable="false">请输入邮箱</string>
+    <string name="error_email_invalid" translatable="false">邮箱格式不正确</string>
+    <string name="error_password_empty" translatable="false">请输入密码</string>
+    <string name="error_password_short" translatable="false">密码长度至少8位</string>
+    <string name="error_password_mismatch" translatable="false">两次密码输入不一致</string>
+    <string name="error_captcha_empty" translatable="false">请输入验证码</string>
+    <string name="error_code_empty" translatable="false">请输入验证码</string>
+    <string name="error_nickname_empty" translatable="false">请输入昵称</string>
+    <string name="error_network" translatable="false">网络请求失败，请重试</string>
+</resources>

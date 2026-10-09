@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.skyflowtracker.mapper.DevicesMapper">
+    <insert id="insertDevices">
+        insert into devices (sn, user_id, model, last_online_time, accumulated_voyage, fly_time,
+                            flight_controller_serial_number,create_time,modification_time)
+        values
+            <foreach collection="devicesList" item="device" separator=",">
+                (#{device.sn}, #{device.userId}, #{device.model}, #{device.lastOnlineTime}, #{device.accumulatedVoyage}, #{device.flyTime},
+                #{device.flightControllerSerialNumber},#{device.createTime},#{device.modificationTime})
+            </foreach>
+    </insert>
+
+    <select id="selectDevicesList" resultType="java.util.Map">
+        select d.sn, d.user_id AS userId, u.user_name AS userName, d.model,
+               d.last_online_time AS lastOnlineTime, d.accumulated_voyage AS accumulatedVoyage,
+               d.fly_time AS flyTime, d.flight_controller_serial_number AS flightControllerSerialNumber,
+               d.create_time AS createTime, d.modification_time AS modificationTime
+        from devices d left join users u on d.user_id = u.user_id
+        <where>
+            <if test="userId != null and userId != ''">and d.user_id = #{userId}</if>
+            <if test="snCode != null and snCode != ''">and d.sn = #{snCode}</if>
+        </where>
+        order by d.create_time desc limit #{offset},#{size}
+    </select>
+
+    <select id="countDevices" resultType="int">
+        select count(*) from devices d
+        <where>
+            <if test="userId != null and userId != ''">and d.user_id = #{userId}</if>
+            <if test="snCode != null and snCode != ''">and d.sn = #{snCode}</if>
+        </where>
+    </select>
+
+    <update id="updateDevices" parameterType="com.example.skyflowtracker.dto.UpdateDevicesDto">
+        update devices
+        <set>
+            <if test="model != null and model != ''">model = #{model},</if>
+            <if test="lastOnlineTime != null">last_online_time = #{lastOnlineTime},</if>
+            <if test="accumulatedVoyage != null">accumulated_voyage = #{accumulatedVoyage},</if>
+            <if test="flyTime != null">fly_time = #{flyTime},</if>
+            <if test="flightControllerSerialNumber != null and flightControllerSerialNumber != ''">flight_controller_serial_number = #{flightControllerSerialNumber},</if>
+            <if test="modificationTime != null">modification_time = #{modificationTime},</if>
+        </set> where sn = #{sn} and user_id = #{userId}
+    </update>
+
+    <delete id="deleteDevices">
+        delete from devices where  user_id = #{userId} and sn in
+        <foreach collection="sns" item="sn" open="(" separator="," close=")">
+            #{sn}
+        </foreach>
+    </delete>
+</mapper>

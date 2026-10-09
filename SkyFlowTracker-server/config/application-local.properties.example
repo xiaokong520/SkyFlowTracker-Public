@@ -1,0 +1,24 @@
+# Copy to application-local.properties; never commit the filled-in file.
+# Run the backend from SkyFlowTracker-server with the local Spring profile.
+spring.datasource.url=jdbc:mysql://localhost:3306/skyflowtracker
+spring.datasource.username=skyflowtracker
+spring.datasource.password=
+spring.mail.host=smtp.example.com
+spring.mail.port=465
+spring.mail.username=
+spring.mail.password=
+spring.mail.protocol=smtps
+spring.data.redis.host=localhost
+spring.data.redis.port=6379
+spring.data.redis.password=
+jwt.filePath=./secrets/jwt
+jwt.issuer=skyflowtracker
+nginx.baseUrl=http://localhost/SkyFlowTracker/
+nginx.basePath=./data/
+flask.baseUrl=http://localhost:5000
+spring.ai.openai.api-key=
+spring.ai.openai.base-url=https://api.example.com
+spring.ai.openai.chat.options.model=your-model-name
+baidu.appid=
+baidu.apikey=
+baidu.secretkey=
